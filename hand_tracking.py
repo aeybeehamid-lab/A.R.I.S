@@ -6,7 +6,7 @@ hands = mpHands.Hands()
 mpDraw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
-
+lastGesture = None
 while True:
     success, frame = cap.read()
 
@@ -58,7 +58,9 @@ while True:
         else:
             gesture = "Unknown"
 
-        print(gesture)
+        if gesture != lastGesture:
+            print(gesture)
+            lastGesture = gesture
 
     cv2.imshow("A.R.I.S - Hand Tracking", frame)
 
