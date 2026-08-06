@@ -45,7 +45,20 @@ while True:
             else:
                 fingers.append(0)
 
-        print(fingers)
+        if fingers == [0, 0, 0, 0, 0]:
+            gesture = "Fist"
+        elif fingers == [1, 1, 1, 1, 1]:
+            gesture = "Open Palm"
+        elif fingers == [0, 1, 0, 0, 0]:
+            gesture = "Pointing"
+        elif fingers == [0, 1, 1, 0, 0]:
+            gesture = "Peace Sign"
+        elif fingers == [1, 0, 0, 0, 0]:
+            gesture = "Thumbs Up"
+        else:
+            gesture = "Unknown"
+
+        print(gesture)
 
     cv2.imshow("A.R.I.S - Hand Tracking", frame)
 
