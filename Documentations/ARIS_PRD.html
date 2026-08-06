@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A.R.I.S — Product Requirements Document</title>
+<style>
+  :root {
+    --ink: #1a1d1f;
+    --muted: #5b6168;
+    --line: #e3e6e8;
+    --accent: #0f7a5c;
+    --accent-soft: #e8f5f0;
+    --gold: #b8873a;
+    --bg: #fbfaf8;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    line-height: 1.65;
+  }
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 64px 32px 100px;
+  }
+  header.doc-header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 40px;
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  .meta {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta strong { color: var(--ink); }
+  .status-pill {
+    display: inline-block;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+  h2 {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 10px;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    font-weight: 700;
+  }
+  h2 .num {
+    color: var(--muted);
+    margin-right: 8px;
+  }
+  h3 {
+    font-size: 19px;
+    margin-top: 28px;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  p { margin: 0 0 16px; font-size: 16px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 8px; font-size: 16px; }
+  strong { color: var(--ink); }
+  .callout {
+    background: var(--card);
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 4px;
+    margin: 18px 0;
+    font-size: 15px;
+  }
+  .callout.milestone {
+    border-left-color: var(--gold);
+    background: #faf6ee;
+  }
+  .callout strong { color: var(--accent); }
+  .callout.milestone strong { color: var(--gold); }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+  }
+  th {
+    background: var(--ink);
+    color: #fff;
+    text-align: left;
+    padding: 10px 14px;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  tr:nth-child(even) td { background: #f6f5f2; }
+  code {
+    font-family: 'SF Mono', Consolas, monospace;
+    background: #f0efec;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #8a4b1f;
+  }
+  .phase-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .phase-card h3 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phase-tag {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 4px;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .phase-tag.progress { background: #fff2e0; color: #b8672f; }
+  .phase-tag.planned { background: #f0f0f0; color: var(--muted); }
+  footer {
+    margin-top: 60px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    text-align: center;
+  }
+  @media print {
+    body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="doc-header">
+    <div class="eyebrow">Product Requirements Document</div>
+    <h1>A.R.I.S</h1>
+    <div class="subtitle">Adaptive Responsive Intelligent System — a multimodal AI desktop operating layer</div>
+    <div class="meta">
+      <span><strong>Author:</strong> Abdulhamid</span>
+      <span><strong>Last Updated:</strong> July 21, 2026</span>
+      <span class="status-pill">Phase 1 — Core Complete</span>
+    </div>
+  </header>
+
+  <h2><span class="num">1.</span>Executive Summary</h2>
+  <p>A.R.I.S (Adaptive Responsive Intelligent System) is a multimodal AI desktop operating layer — a system that sits on top of a user's computer and lets them interact with it through natural, human-native input: hand gestures, vision, and eventually voice, instead of only a mouse and keyboard.</p>
+  <p>Think of it as a personal "co-pilot" layer for the desktop: it watches (via camera), understands intent (via an orchestrator and reasoning engine), and acts (by controlling applications, executing tasks, or assisting decisions) — similar in spirit to Jarvis from Iron Man, but built incrementally, starting from real, working computer vision rather than a hypothetical AI assistant.</p>
+
+  <h2><span class="num">2.</span>Problem Statement</h2>
+  <p>Modern computer interaction is still fundamentally mouse-and-keyboard-bound, despite huge advances in AI, computer vision, and natural language understanding. This creates friction in several ways:</p>
+  <ul>
+    <li>Certain tasks (media control, presentation navigation, quick app switching, accessibility use cases) are naturally suited to gesture or voice, but still require reaching for a physical input device.</li>
+    <li>AI assistants today are largely reactive text boxes (chatbots) — they don't perceive the user's environment or physical actions, and they don't act on the user's behalf inside the OS.</li>
+    <li>There is no unified, personal, extensible "intelligence layer" that combines perception (seeing what the user does), reasoning (understanding what they want), and action (doing it) on a normal desktop computer, built and owned by an individual rather than a large platform.</li>
+  </ul>
+  <p>A.R.I.S aims to close this gap — starting narrow (hand gesture recognition) and expanding toward a full perceptual, reasoning, and action-taking system.</p>
+
+  <h2><span class="num">3.</span>Vision</h2>
+  <p>A.R.I.S will eventually be a layered system where:</p>
+  <ol>
+    <li>A <strong>Perception Layer</strong> watches the user (hands, screen content, eventually voice) and converts raw input (camera frames, audio, OCR'd screen text) into structured signals.</li>
+    <li>An <strong>Orchestrator</strong> takes those signals and decides what they mean and what should happen next — routing "intent" to the correct handler.</li>
+    <li>A <strong>Co-Founder Brain</strong> acts as a reasoning/decision-making core — using an LLM (Claude API) to interpret ambiguous intent, hold context, and make judgment calls the way a human collaborator would.</li>
+    <li>A <strong>Jarvis Engine</strong> executes the decided action — controlling the OS, launching apps, simulating input, or responding to the user directly.</li>
+  </ol>
+  <p>The long-term goal is a system that feels like working alongside a capable assistant who can see what you're doing and act on your behalf, not just answer questions in a chat window.</p>
+
+  <h2><span class="num">4.</span>Current Status</h2>
+  <div class="callout">
+    <strong>Phase 1's core is functionally complete.</strong> What exists today:
+  </div>
+  <ul>
+    <li>A working real-time hand-tracking pipeline built in Python using OpenCV (camera capture) and MediaPipe (hand landmark detection).</li>
+    <li>The pipeline captures live webcam video, detects up to two hands per frame, extracts all 21 landmark points per hand (in pixel coordinates), and renders a live skeletal overlay on screen.</li>
+    <li>Per-finger up/down state detection across all five fingers, using y-coordinate comparison for four fingers and x-coordinate comparison for the thumb.</li>
+    <li>Named gesture classification (Fist, Open Palm, Pointing, Peace Sign, Thumbs Up) mapped from finger-state patterns, with an Unknown fallback for unrecognized poses.</li>
+    <li>Debouncing logic so a held gesture fires a single event rather than repeating every frame.</li>
+    <li>Project is version-controlled on GitHub with a clean, incremental commit history, a <code>.gitignore</code> excluding environment files, and a <code>requirements.txt</code> for reproducible setup.</li>
+    <li>Environment: Python 3.11 (chosen specifically for MediaPipe compatibility — newer Python versions such as 3.13 are not yet supported by MediaPipe), managed via a project-local virtual environment (<code>.venv</code>), developed in VS Code.</li>
+  </ul>
+  <p><strong>Not yet built:</strong> action dispatch (mapping gestures to real system actions), dynamic/motion-based gestures, the orchestrator, the co-founder brain (Claude API integration), and the Jarvis engine.</p>
+
+  <h2><span class="num">5.</span>Phased Roadmap</h2>
+
+  <div class="phase-card">
+    <h3><span class="phase-tag" style="background:var(--accent-soft);color:var(--accent);">Core Complete</span>Phase 1 — Perception: Hand Tracking &amp; Gesture Recognition</h3>
+    <ul>
+      <li>Real-time hand detection and landmark extraction — done</li>
+      <li>Rule-based static gesture classification (fist, open palm, pointing, peace sign, thumbs up) using position comparisons between landmarks — done</li>
+      <li>Gesture debouncing/state management so one physical gesture triggers one detected event, not a flood of repeated triggers — done</li>
+      <li>Remaining for full Phase 1 close-out: broader gesture set, dynamic/motion-based gestures (stretch goal, may shift to Phase 1.5 or fold into Phase 2 tooling)</li>
+    </ul>
+    <div class="callout milestone"><strong>Milestone:</strong> the system reliably detects 3–5 distinct static hand gestures in real time from a live webcam feed. <strong>— Achieved.</strong></div>
+  </div>
+
+  <div class="phase-card">
+    <h3><span class="phase-tag planned">Planned</span>Phase 2 — Action Dispatch</h3>
+    <ul>
+      <li>Map each recognized gesture to a real system action (e.g. open an application, simulate a keypress, trigger a script) using tools such as <code>pyautogui</code>, <code>keyboard</code>, or <code>pynput</code></li>
+      <li>Build a simple, extensible "gesture → action" configuration so new mappings can be added without rewriting core logic</li>
+    </ul>
+    <div class="callout milestone"><strong>Milestone:</strong> performing a gesture in front of the camera visibly and reliably triggers a real action on the desktop.</div>
+  </div>
+
+  <div class="phase-card">
+    <h3><span class="phase-tag planned">Planned</span>Phase 3 — Orchestrator</h3>
+    <ul>
+      <li>Introduce a central coordinating layer that can accept signals from multiple input sources (not just hand gestures — eventually voice, screen content via OCR, etc.)</li>
+      <li>Decide which handler/module should respond to a given signal</li>
+      <li>Establish the internal architecture/message format that later modules (brain, Jarvis engine) will plug into</li>
+    </ul>
+  </div>
+
+  <div class="phase-card">
+    <h3><span class="phase-tag planned">Planned</span>Phase 4 — Co-Founder Brain</h3>
+    <ul>
+      <li>Integrate the Claude API as a reasoning core that can interpret ambiguous or complex intent, hold conversational/task context, and make judgment calls</li>
+      <li>Allow the system to go beyond fixed gesture→action mappings into more flexible, context-aware behavior</li>
+    </ul>
+  </div>
+
+  <div class="phase-card">
+    <h3><span class="phase-tag planned">Planned</span>Phase 5 — Jarvis Engine</h3>
+    <ul>
+      <li>Full action-execution layer capable of controlling applications, retrieving information, and carrying out multi-step tasks on the user's behalf</li>
+      <li>Integration point for perception (Phase 1–3) and reasoning (Phase 4) to produce real, useful autonomous or semi-autonomous behavior</li>
+    </ul>
+  </div>
+
+  <h2><span class="num">6.</span>Technical Architecture</h2>
+  <table>
+    <tr><th>Layer</th><th>Purpose</th><th>Technology</th></tr>
+    <tr><td>Perception</td><td>Capture and interpret visual input</td><td>Python, OpenCV, MediaPipe</td></tr>
+    <tr><td>Perception (planned)</td><td>Screen/text understanding</td><td>EasyOCR</td></tr>
+    <tr><td>Orchestrator (planned)</td><td>Route signals to correct handler</td><td>Python</td></tr>
+    <tr><td>Co-Founder Brain (planned)</td><td>Reasoning, context, decision-making</td><td>Claude API</td></tr>
+    <tr><td>Jarvis Engine (planned)</td><td>Execute actions on the OS</td><td>pyautogui / pynput / keyboard, subprocess</td></tr>
+  </table>
+  <p><strong>Environment:</strong> Python 3.11, virtual environment per project, dependencies pinned in <code>requirements.txt</code> (notably <code>mediapipe==0.10.14</code> and <code>protobuf==4.25.3</code>, pinned deliberately after resolving a version-compatibility issue between MediaPipe and protobuf).</p>
+  <p><strong>Repository:</strong> version-controlled with Git, hosted on GitHub, with <code>.venv</code>, <code>__pycache__</code>, and editor-specific files excluded via <code>.gitignore</code>.</p>
+
+  <h2><span class="num">7.</span>Success Metrics (Phase 1)</h2>
+  <ul>
+    <li>Hand detection runs in real time (no perceptible lag) on standard consumer webcam hardware</li>
+    <li>At least 3–5 distinct gestures are classified reliably and repeatably</li>
+    <li>False-positive gesture triggers are rare enough not to disrupt normal use</li>
+    <li>Codebase is clean, documented, and committed incrementally with a clear Git history</li>
+  </ul>
+
+  <h2><span class="num">8.</span>Risks &amp; Open Questions</h2>
+  <ul>
+    <li><strong>Scope creep risk:</strong> the gap between "detect a gesture" and "full Jarvis-like assistant" is large. Each phase needs its own realistic, scoped definition of done rather than chasing the end vision prematurely.</li>
+    <li><strong>Dynamic gesture complexity:</strong> static gestures (fist, palm, etc.) are tractable with rule-based logic; motion-based gestures (swipes, circles) will likely require a lightweight ML classifier rather than pure geometry — a decision to revisit later in Phase 1.</li>
+    <li><strong>Cross-platform considerations:</strong> current development is Windows-first; action dispatch (Phase 2) will need OS-specific handling if ARIS is intended to run beyond Windows eventually.</li>
+    <li><strong>Performance boundaries:</strong> as more perception sources are added (OCR, voice), resource usage and latency will need active management to keep the system feeling responsive.</li>
+  </ul>
+
+  <h2><span class="num">9.</span>Non-Goals (For Now)</h2>
+  <ul>
+    <li>ARIS is not currently intended to be a cloud service or multi-user product — it is a personal system, built and used by its creator, at least through the phases outlined above.</li>
+    <li>Full autonomous computer control (Phase 5+) is an eventual goal, not a near-term one — early phases intentionally keep the human in the loop.</li>
+  </ul>
+
+  <h2><span class="num">10.</span>Appendix: Key Terms</h2>
+  <ul>
+    <li><strong>Landmark</strong> — a single tracked point on a detected hand (21 per hand), given as normalized or pixel (x, y, z) coordinates.</li>
+    <li><strong>Gesture classification</strong> — the process of interpreting raw landmark positions as a named, meaningful gesture.</li>
+    <li><strong>Orchestrator</strong> — the internal routing layer deciding what should happen in response to a given input signal.</li>
+    <li><strong>Debouncing</strong> — logic to ensure a continuous physical gesture registers as a single discrete event rather than firing repeatedly every frame.</li>
+  </ul>
+
+  <footer>A.R.I.S — Product Requirements Document · Prepared by Abdulhamid</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>A.R.I.S — Changelog</title>
+<style>
+  :root {
+    --ink: #1a1d1f;
+    --muted: #5b6168;
+    --line: #e3e6e8;
+    --accent: #0f7a5c;
+    --accent-soft: #e8f5f0;
+    --gold: #b8873a;
+    --bg: #fbfaf8;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    line-height: 1.6;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 56px 32px 100px; }
+  header.doc-header { border-bottom: 3px solid var(--ink); padding-bottom: 24px; margin-bottom: 40px; }
+  .eyebrow {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    letter-spacing: 0.14em; text-transform: uppercase; font-size: 12px;
+    color: var(--accent); font-weight: 700; margin-bottom: 10px;
+  }
+  h1 { font-size: 36px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { font-family: 'Helvetica Neue', Arial, sans-serif; color: var(--muted); font-size: 15px; }
+  .entry {
+    position: relative;
+    padding: 0 0 28px 28px;
+    border-left: 2px solid var(--line);
+    margin-left: 6px;
+  }
+  .entry:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+  .entry::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg);
+  }
+  .entry-date {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .entry-title { font-size: 19px; margin: 0 0 8px; }
+  .entry ul { margin: 8px 0 0; padding-left: 20px; }
+  .entry li { margin-bottom: 6px; font-size: 15px; }
+  code {
+    font-family: 'SF Mono', Consolas, monospace;
+    background: #f0efec;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.88em;
+    color: #8a4b1f;
+  }
+  footer {
+    margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--line);
+    font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 12px;
+    color: var(--muted); text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="doc-header">
+    <div class="eyebrow">Development Log</div>
+    <h1>A.R.I.S — Changelog</h1>
+    <div class="subtitle">Running record of build progress, decisions, and fixes</div>
+  </header>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Phase 1 core complete: gesture classification + debouncing</h3>
+    <ul>
+      <li>Added named gesture classification — <code>fingers</code> list mapped to Fist, Open Palm, Pointing, Peace Sign, Thumbs Up, with Unknown fallback</li>
+      <li>Added debouncing logic (<code>lastGesture</code> state tracking) so a held gesture fires once instead of every frame</li>
+      <li>Project restructured to VS Code (moved off PyCharm) for better cross-project consistency with the rest of the LME/ARIS stack</li>
+      <li>Rebuilt hand tracking pipeline from scratch, no tutorial dependency, with full understanding of each piece</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Finger-state detection across all five fingers</h3>
+    <ul>
+      <li>Extended single-finger (index) up/down detection to all five fingers</li>
+      <li>Thumb handled via x-coordinate comparison (landmark 4 vs 2) due to its side-to-side orientation, rather than y-coordinate like the other four fingers</li>
+      <li>Output: <code>fingers</code> list of five 1/0 values representing extended/curled state per finger</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Landmark coordinate extraction</h3>
+    <ul>
+      <li>Converted normalized mediapipe landmark coordinates (0–1 range) to real pixel coordinates using frame height/width</li>
+      <li>Stored all 21 landmarks per frame in an <code>lmList</code> list of <code>[id, cx, cy]</code> entries for downstream comparison logic</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Fixed mediapipe / protobuf compatibility issue</h3>
+    <ul>
+      <li>Hit <code>AttributeError: module 'mediapipe' has no attribute 'solutions'</code> on initial install (mediapipe 0.10.35, latest at the time)</li>
+      <li>Root cause: protobuf version conflict — pip's resolver didn't select a fully compatible pairing</li>
+      <li>Fix: pinned <code>mediapipe==0.10.14</code> and <code>protobuf==4.25.3</code>, confirmed working via direct import test</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Environment setup: Python 3.11 + VS Code</h3>
+    <ul>
+      <li>Discovered mediapipe does not yet support Python 3.13 — no prebuilt wheels available</li>
+      <li>Confirmed Python 3.11 already installed locally; created project-local <code>.venv</code> using it</li>
+      <li>Migrated from PyCharm to VS Code per personal preference; configured interpreter, integrated terminal, and Python extension</li>
+      <li>Note: Code Runner extension uses a different default interpreter than the selected venv — running scripts via the integrated terminal (<code>python hand_tracking.py</code>) avoids this issue</li>
+    </ul>
+  </div>
+
+  <div class="entry">
+    <div class="entry-date">July 21, 2026</div>
+    <h3 class="entry-title">Project initialized</h3>
+    <ul>
+      <li>Repository created and pushed to GitHub</li>
+      <li>Added <code>.gitignore</code> (excluding <code>.venv/</code>, <code>__pycache__/</code>, <code>.vscode/</code>) and <code>requirements.txt</code> for reproducible setup</li>
+      <li>Basic OpenCV webcam capture loop confirmed working as the foundation before adding mediapipe</li>
+    </ul>
+  </div>
+
+  <footer>A.R.I.S — Changelog · Maintained by Abdulhamid</footer>
+</div>
+</body>
+</html>
