@@ -1,5 +1,6 @@
 import cv2
 import mediapipe as mp
+import pyautogui
 
 mpHands = mp.solutions.hands
 hands = mpHands.Hands()
@@ -60,6 +61,12 @@ while True:
 
         if gesture != lastGesture:
             print(gesture)
+
+            if gesture == "Open Palm":
+                pyautogui.press("win")
+                pyautogui.write("notepad")
+                pyautogui.press("enter")
+
             lastGesture = gesture
 
     cv2.imshow("A.R.I.S - Hand Tracking", frame)
