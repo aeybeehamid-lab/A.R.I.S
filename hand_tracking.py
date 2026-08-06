@@ -8,6 +8,7 @@ mpDraw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
 lastGesture = None
+
 while True:
     success, frame = cap.read()
 
@@ -62,10 +63,6 @@ while True:
         if gesture != lastGesture:
             print(gesture)
 
-
-            if gesture != lastGesture:
-             print(gesture)
-
             if gesture == "Open Palm":
                 pyautogui.press("win")
                 pyautogui.write("notepad")
@@ -82,6 +79,9 @@ while True:
                 pyautogui.press("enter")
 
             lastGesture = gesture
+
+    else:
+        lastGesture = None
 
     cv2.imshow("A.R.I.S - Hand Tracking", frame)
 
