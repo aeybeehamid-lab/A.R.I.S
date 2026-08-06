@@ -62,9 +62,23 @@ while True:
         if gesture != lastGesture:
             print(gesture)
 
+
+            if gesture != lastGesture:
+             print(gesture)
+
             if gesture == "Open Palm":
                 pyautogui.press("win")
                 pyautogui.write("notepad")
+                pyautogui.press("enter")
+
+            elif gesture == "Fist":
+                screenshot = pyautogui.screenshot()
+                screenshot.save("screenshot.png")
+                print("Screenshot saved")
+
+            elif gesture == "Peace Sign":
+                pyautogui.press("win")
+                pyautogui.write("vscode")
                 pyautogui.press("enter")
 
             lastGesture = gesture
